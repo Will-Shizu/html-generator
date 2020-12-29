@@ -1,6 +1,6 @@
 # HTML Generator
- - [English](#esglish)
- - [Português](#portugues)
+ - [English](#english)
+ - [Português](#português)
 
 ## English 
  A Python script to generate HTML documents.
