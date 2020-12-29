@@ -1,9 +1,17 @@
 # Methods
 def addProf(name, clear=False):
-	profContent = [f"prof= {name}"]
 	if not clear:
 		doc = open("data/profiles.conf", 'r')
-		profContent.append(doc.readlines()).sort()
+		profContent = doc.readlines()
+	else:
+		profContent = []
+	profContent.append(f"prof= {name}\n")
+	if len(profContent) > 1:
+		profContent.pop(0)
+	profContent = sorted(profContent)
+	profContent.insert(0, "# Your profile names are stored here\n\n")
+	if "\n" in profContent:
+		profContent.remove("\n")
 	doc = open("data/profiles.conf", 'w')
 	doc.writelines(profContent)
 	doc.close()
@@ -29,16 +37,17 @@ def userSelect():
 		op = str(input("Option: "))
 		try:
 			op = int(op)
+			if op > len(allProf) or op <= 0:
+				print("Invalid profile!")
+			else:
+				print("Deu certo mlk")
 		except:
-			try:
-				op = str().lower()
-				if op == "p":
-					print("Create a new profile:")
-					n = str(input("Name: "))
-					addProf(n)
-				else:
-					print("Invalid profile!")
-			except:
+			op = op.lower()
+			if op == "p":
+				print("Create a new profile:")
+				n = str(input("Name: "))
+				addProf(n)
+			else:
 				print("Invalid profile!")
 
 # Main code

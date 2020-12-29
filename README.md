@@ -5,5 +5,5 @@
 ## English 
  A Python script to generate HTML documents.
 
-## Porturguês
+## Português
  Um script em python para gerar documentos HTML.
