@@ -48,16 +48,71 @@ def ghtml(user):
 		if ln[:5] == "lang=":
 			lang = ln[5:].strip()
 		if ln[:8] == "charset=":
-			cs = ln[5:].strip()
+			cs = ln[8:].strip()
 	content.append(f'<html lang="{lang}">\n')
 	content.append(f'<head>\n')
 	content.append(f'{tab}<meta charset="{cs}">\n')
-	content.append(f'{tab}<meta name="viewport" content="width=device-width, initial-scale=1.0"\n')
+	content.append(f'{tab}<meta name="viewport" content="width=device-width, initial-scale=1.0">\n')
 	content.append(f'{tab}<meta name="author" content="{user}">\n')
 	content.append(f'{tab}<title>{title}</title>\n')
-	content.append("</head>")
+	content.append("</head>\n")
 	doc = open(f"{di}/{docName}.html", 'w')
 	doc.writelines(content)
+	doc.close()
+	print(f"{9*' '}{10*'-'} COMANDS {10*'-'}")
+	print()
+	print("How to use: https://github.com/will-shizu/html-generator")
+	comands(user, di, docName)
+
+def comands(user,di,docName):
+	print()
+	print(f"-> {docName}.html")
+	doc = open(f"{di}/{docName}.html", 'r')
+	content = doc.readlines()
+	noClose = ("meta", "hr", "br", "area","base","col","embed","img","input","link","param","source","track","wbr")
+	c = str(input("Your comand: ")).strip()
+	if "," in c:
+		c = c.split(",")
+		for tg in c:
+			tg = tg.strip()
+			if tg in noClose:
+				content.append(f"<{tg}/>")
+			else:
+				content.append(f"<{tg}>\n")
+				content.append(f"</{tg}>\n")
+	else:
+		if c in noClose:
+			content.append(f"<{c}/>")
+		else:
+			content.append(f"<{c}>\n")
+			content.append(f"</{c}>\n")
+	doc = open(f"{di}/{docName}.html", 'w')
+	doc.writelines(content)
+	doc.close()
+	listTags(di,docName, noClose)
+
+
+def listTags(di,docName,noClose):
+	print()
+	print(f"-> {docName}.html")
+	doc = open(f"{di}/{docName}.html", 'r')
+	content = doc.readlines()
+	endHead = content[content.index("</head>\n")+1:]
+	i = 0
+	for l in endHead:
+		if ("<" in l) and (">" in l):
+			if "/" in l:
+				if l[l.index(">") - 1] == "/":
+					tag = l[l.index("<")+1:l.index(">")-1]
+					print(tag)
+			else:
+				ind = l.count("	")
+				tag = l[l.index("<")+1:l.index(">")]
+				if ind == 0:
+					i +=1
+				elif ind == 1:
+					
+				print(f"{ind*"	"}{tag}")
 
 # "Interface" methods
 def userSelect():
@@ -118,7 +173,7 @@ def menu(user):
 			if op == 2:
 				editTemp(user)
 			if op == 3:
-				return True
+				exit()
 			else:
 				print("Invalid option!")
 				return False
