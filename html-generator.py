@@ -76,7 +76,7 @@ def comands(user,di,docName):
 		for tg in c:
 			tg = tg.strip()
 			if tg in noClose:
-				content.append(f"<{tg}/>")
+				content.append(f"<{tg}/>\n")
 			else:
 				content.append(f"<{tg}>\n")
 				content.append(f"</{tg}>\n")
@@ -101,18 +101,24 @@ def listTags(di,docName,noClose):
 	i = 0
 	for l in endHead:
 		if ("<" in l) and (">" in l):
+			ind = l.count("	")
 			if "/" in l:
 				if l[l.index(">") - 1] == "/":
 					tag = l[l.index("<")+1:l.index(">")-1]
-					print(tag)
+					if ind == 0:
+						i = abs(i)
+						i +=1
+					else:
+						i += 0.1
+					print(f"{ind*'	'}{i}-{tag}")
 			else:
-				ind = l.count("	")
 				tag = l[l.index("<")+1:l.index(">")]
 				if ind == 0:
+					i = abs(i)
 					i +=1
-				elif ind == 1:
-					
-				print(f"{ind*"	"}{tag}")
+				else:
+					i += 0.1
+				print(f"{ind*'	'}{i}-{tag}")
 
 # "Interface" methods
 def userSelect():
