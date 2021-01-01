@@ -65,6 +65,10 @@ def ghtml(user):
 	comands(user, di, docName)
 
 def comands(user,di,docName):
+	try:
+		pos
+	except:	
+		pos = False
 	print()
 	print(f"-> {docName}.html")
 	doc = open(f"{di}/{docName}.html", 'r')
@@ -72,20 +76,69 @@ def comands(user,di,docName):
 	noClose = ("meta", "hr", "br", "area","base","col","embed","img","input","link","param","source","track","wbr")
 	c = str(input("Your comand: ")).strip()
 	if "," in c:
+		i = 0
 		c = c.split(",")
 		for tg in c:
 			tg = tg.strip()
-			if tg in noClose:
-				content.append(f"<{tg}/>\n")
+			if "select" in tg or "slc" in tg:
+				slc = float(tg.split(" ")[1])
+				endHead = content[content.index("</head>\n")+1:]
+				for n,l in enumerate(endHead):
+					if ("<" in l) and (">" in l):
+						ind = l.count("	")
+						if "/" in l:
+							if l[l.index(">") - 1] == "/":
+								print("This tag cannot have children!")
+						else:
+							tag = l[l.index("<")+1:l.index(">")]
+							if ind == 0:
+								i = abs(i)
+								i +=1
+							else:
+								i += 0.1
+							if i == slc:
+								pos = n+2;
+								break
+				pos = pos + content.index("</head>\n")
+			elif tg in noClose:
+				if not pos:
+					content.append(f"<{tg}/>\n")
+				else:
+					content.insert(pos, f"<{tg}/>\n")
 			else:
-				content.append(f"<{tg}>\n")
-				content.append(f"</{tg}>\n")
+				if not pos:
+					content.append(f"<{tg}>\n")
+					content.append(f"</{tg}>\n")					
+				else:
+					content.insert(pos, f"<{tg}>\n")
+					content.insert(pos, f"</{tg}>\n")
 	else:
-		if c in noClose:
-			content.append(f"<{c}/>")
+		if "select" in c or "slc" in c:
+			slc = float(c.split(" ")[1])
+			endHead = content[content.index("</head>\n")+1:]
+			i = 0
+			for n,l in enumerate(endHead):
+				if ("<" in l) and (">" in l):
+					ind = l.count("	")
+					if "/" in l:
+						if l[l.index(">") - 1] == "/":
+							print("This tag cannot have children!")
+					else:
+						tag = l[l.index("<")+1:l.index(">")]
+						if ind == 0:
+							i = abs(i)
+							i +=1
+						else:
+							i += 0.1
+						if i == slc:
+							pos = n+1;
+							break
+			#content = content[:content.index("</head>\n")+1].extend(endHead)
+		elif c in noClose:
+			content.insert(pos,f"<{c}/>")
 		else:
-			content.append(f"<{c}>\n")
-			content.append(f"</{c}>\n")
+			content.insert(pos,f"<{c}>\n")
+			content.insert(pos,f"</{c}>\n")
 	doc = open(f"{di}/{docName}.html", 'w')
 	doc.writelines(content)
 	doc.close()
@@ -202,5 +255,4 @@ while(True):
 	exit = menu(user)
 	if exit:
 		break
-
 ghtml(user)
