@@ -62,13 +62,11 @@ def ghtml(user):
 	print(f"{9*' '}{10*'-'} COMANDS {10*'-'}")
 	print()
 	print("How to use: https://github.com/will-shizu/html-generator")
-	comands(user, di, docName)
+	global pos
+	pos = False
+	comands(pos, di, docName)
 
-def comands(user,di,docName):
-	try:
-		pos
-	except:	
-		pos = False
+def comands(pos,di,docName):
 	print()
 	print(f"-> {docName}.html")
 	doc = open(f"{di}/{docName}.html", 'r')
@@ -104,14 +102,14 @@ def comands(user,di,docName):
 				if not pos:
 					content.append(f"<{tg}/>\n")
 				else:
-					content.insert(pos, f"<{tg}/>\n")
+					content.insert(pos, f"{(ind+1)*'	'}<{tg}/>\n")
 			else:
 				if not pos:
 					content.append(f"<{tg}>\n")
 					content.append(f"</{tg}>\n")					
 				else:
-					content.insert(pos, f"<{tg}>\n")
-					content.insert(pos, f"</{tg}>\n")
+					content.insert(pos, f"{(ind+1)*'	'}</{tg}>\n")
+					content.insert(pos, f"{(ind+1)*'	'}<{tg}>\n")
 	else:
 		if "select" in c or "slc" in c:
 			slc = float(c.split(" ")[1])
@@ -131,14 +129,20 @@ def comands(user,di,docName):
 						else:
 							i += 0.1
 						if i == slc:
-							pos = n+1;
+							pos = n+2;
 							break
-			#content = content[:content.index("</head>\n")+1].extend(endHead)
 		elif c in noClose:
-			content.insert(pos,f"<{c}/>")
+			if not pos:
+				content.append(f"<{c}/>\n")
+			else:
+				content.insert(pos, f"{(ind+1)*'	'}<{c}/>\n")
 		else:
-			content.insert(pos,f"<{c}>\n")
-			content.insert(pos,f"</{c}>\n")
+			if not pos:
+				content.append(f"<{c}>\n")
+				content.append(f"</{c}>\n")					
+			else:
+				content.insert(pos, f"{(ind+1)*'	'}</{c}>\n")
+				content.insert(pos, f"{(ind+1)*'	'}<{c}>\n")
 	doc = open(f"{di}/{docName}.html", 'w')
 	doc.writelines(content)
 	doc.close()
@@ -163,7 +167,7 @@ def listTags(di,docName,noClose):
 						i +=1
 					else:
 						i += 0.1
-					print(f"{ind*'	'}{i}-{tag}")
+					print(f"{ind*'   '}{i}-{tag}")
 			else:
 				tag = l[l.index("<")+1:l.index(">")]
 				if ind == 0:
@@ -171,7 +175,7 @@ def listTags(di,docName,noClose):
 					i +=1
 				else:
 					i += 0.1
-				print(f"{ind*'	'}{i}-{tag}")
+				print(f"{ind*'   '}{i}-{tag}")
 
 # "Interface" methods
 def userSelect():
