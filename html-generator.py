@@ -64,12 +64,16 @@ def ghtml(user):
 	print("How to use: https://github.com/will-shizu/html-generator")
 	global pos
 	pos = False
-	while(True):
-		comands(pos, di, docName)
+	con = True
+	while(con):
+		con = comands(pos, di, docName)
+		if con != False:
+			con = True
+	doc = open(f"{di}/{docName}.html", 'a')
+	doc.write("</html>")
 
 def comands(pos,di,docName):
 	print()
-	print(f"-> {docName}.html")
 	doc = open(f"{di}/{docName}.html", 'r')
 	content = doc.readlines()
 	noClose = ("meta", "hr", "br", "area","base","col","embed","img","input","link","param","source","track","wbr")
@@ -81,7 +85,7 @@ def comands(pos,di,docName):
 			tg = tg.strip()
 			if tg == "--exit":
 				print("Bye")
-				exit()
+				return False
 			elif tg == "unselect" or tg == "uslc":
 				pos = False
 			elif "select" in tg or "slc" in tg:
@@ -122,7 +126,7 @@ def comands(pos,di,docName):
 	else:
 		if c == "--exit":
 			print("Bye")
-			exit()
+			return False
 		elif c == "unselect" or c == "uslc":
 				pos = False
 		elif "select" in c or "slc" in c:
