@@ -1,6 +1,10 @@
 # HTML Generator
- - [English](#english)
- - [Português](#português)
+- [English](#english)
+   1. [Comands](#comands)
+   2. [Examples](#examples)
+- [Português](#português)
+   1. [Comandos](#comandos)
+   2. [Exemplos](#exemplos)
 
 ## English 
  A Python script to generate HTML documents.
@@ -24,6 +28,7 @@ When you create a new HTML document the head tag is automatically generated:
 ```
 ### Examples:
 **Syntax:** `body`
+
 **Output:**
 ```
 -> [document name].hmtl
@@ -45,6 +50,7 @@ When you create a new HTML document the head tag is automatically generated:
 ```
 
 **Syntax:** `select 1, main, footer`
+
 **Output:**
 ```
 -> [document name].hmtl
@@ -72,6 +78,7 @@ When you create a new HTML document the head tag is automatically generated:
 ```
 
 **Syntax:** `slc 1, header, uslc, script`
+
 **Output:**
 ```
 -> [document name].hmtl
@@ -105,6 +112,7 @@ When you create a new HTML document the head tag is automatically generated:
 ```
 
 **Syntax:** `--exit`
+
 **Output:**
 ```
 Bye
@@ -154,6 +162,7 @@ Quando você cria um novo documento HTML a tag head é gerada automaticamente:
 ```
 ### Exemplos:
 **Syntax:** `body`
+
 **Output:**
 ```
 -> [nome do documento].hmtl
@@ -175,6 +184,7 @@ Quando você cria um novo documento HTML a tag head é gerada automaticamente:
 ```
 
 **Syntax:** `select 1, main, footer`
+
 **Output:**
 ```
 -> [nome do documento].hmtl
@@ -202,6 +212,7 @@ Quando você cria um novo documento HTML a tag head é gerada automaticamente:
 ```
 
 **Syntax:** `slc 1, header, uslc, script`
+
 **Output:**
 ```
 -> [nome do documento].hmtl
@@ -235,6 +246,7 @@ Quando você cria um novo documento HTML a tag head é gerada automaticamente:
 ```
 
 **Syntax:** `--exit`
+
 **Output:**
 ```
 Bye
