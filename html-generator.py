@@ -35,7 +35,7 @@ def ghtml(user):
 	while(True):
 		asw = str(input("Want to choose a different directory? [y/n] ")).lower()
 		if asw == 'y':
-			di = str(input("Choose directory"))
+			di = str(input("Choose directory: "))
 			break
 		elif asw == 'n':
 			break
@@ -59,6 +59,7 @@ def ghtml(user):
 	doc = open(f"{di}/{docName}.html", 'w')
 	doc.writelines(content)
 	doc.close()
+	print()
 	print(f"{9*' '}{10*'-'} COMANDS {10*'-'}")
 	print()
 	print("How to use: https://github.com/will-shizu/html-generator")
@@ -257,7 +258,7 @@ def menu(user):
 			if op == 2:
 				editTemp(user)
 			if op == 3:
-				exit()
+				return "quit"
 			else:
 				print("Invalid option!")
 				return False
@@ -278,6 +279,9 @@ while(True):
 
 while(True):
 	exit = menu(user)
-	if exit:
+	if exit or exit == "quit":
 		break
-ghtml(user)
+if exit != "quit":
+	ghtml(user)
+else:
+	print("Bye")
