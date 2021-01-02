@@ -64,7 +64,8 @@ def ghtml(user):
 	print("How to use: https://github.com/will-shizu/html-generator")
 	global pos
 	pos = False
-	comands(pos, di, docName)
+	while(True):
+		comands(pos, di, docName)
 
 def comands(pos,di,docName):
 	print()
@@ -78,7 +79,12 @@ def comands(pos,di,docName):
 		c = c.split(",")
 		for tg in c:
 			tg = tg.strip()
-			if "select" in tg or "slc" in tg:
+			if tg == "--exit":
+				print("Bye")
+				exit()
+			elif tg == "unselect" or tg == "uslc":
+				pos = False
+			elif "select" in tg or "slc" in tg:
 				slc = float(tg.split(" ")[1])
 				endHead = content[content.index("</head>\n")+1:]
 				for n,l in enumerate(endHead):
@@ -90,10 +96,11 @@ def comands(pos,di,docName):
 						else:
 							tag = l[l.index("<")+1:l.index(">")]
 							if ind == 0:
-								i = abs(i)
+								i = int(i)
 								i +=1
 							else:
 								i += 0.1
+								i = round(i, 1)
 							if i == slc:
 								pos = n+2;
 								break
@@ -103,6 +110,7 @@ def comands(pos,di,docName):
 					content.append(f"<{tg}/>\n")
 				else:
 					content.insert(pos, f"{(ind+1)*'	'}<{tg}/>\n")
+					pos+=1
 			else:
 				if not pos:
 					content.append(f"<{tg}>\n")
@@ -110,8 +118,14 @@ def comands(pos,di,docName):
 				else:
 					content.insert(pos, f"{(ind+1)*'	'}</{tg}>\n")
 					content.insert(pos, f"{(ind+1)*'	'}<{tg}>\n")
+					pos+=2
 	else:
-		if "select" in c or "slc" in c:
+		if c == "--exit":
+			print("Bye")
+			exit()
+		elif c == "unselect" or c == "uslc":
+				pos = False
+		elif "select" in c or "slc" in c:
 			slc = float(c.split(" ")[1])
 			endHead = content[content.index("</head>\n")+1:]
 			i = 0
@@ -124,10 +138,11 @@ def comands(pos,di,docName):
 					else:
 						tag = l[l.index("<")+1:l.index(">")]
 						if ind == 0:
-							i = abs(i)
+							i = int(i)
 							i +=1
 						else:
 							i += 0.1
+							i = round(i, 1)
 						if i == slc:
 							pos = n+2;
 							break
@@ -163,18 +178,20 @@ def listTags(di,docName,noClose):
 				if l[l.index(">") - 1] == "/":
 					tag = l[l.index("<")+1:l.index(">")-1]
 					if ind == 0:
-						i = abs(i)
+						i = int(i)
 						i +=1
 					else:
 						i += 0.1
+						i = round(i, 1)
 					print(f"{ind*'   '}{i}-{tag}")
 			else:
 				tag = l[l.index("<")+1:l.index(">")]
 				if ind == 0:
-					i = abs(i)
+					i = int(i)
 					i +=1
 				else:
 					i += 0.1
+					i = round(i, 1)
 				print(f"{ind*'   '}{i}-{tag}")
 
 # "Interface" methods
