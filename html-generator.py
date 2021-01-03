@@ -1,7 +1,9 @@
+import os
+
 # Document methods
 def addProf(name, clear=False):
 	if not clear:
-		doc = open("data/profiles.conf", 'r')
+		doc = open(os.path.join(os.path.dirname(os.path.realpath(__file__)),"data", "profiles.conf"), 'r')
 		profContent = doc.readlines()
 	else:
 		profContent = []
@@ -12,13 +14,13 @@ def addProf(name, clear=False):
 	profContent.insert(0, "# Your profile names are stored here\n\n")
 	if "\n" in profContent:
 		profContent.remove("\n")
-	doc = open("data/profiles.conf", 'w')
+	doc = open(os.path.join(os.path.dirname(os.path.realpath(__file__)),"data", "profiles.conf"), 'w')
 	doc.writelines(profContent)
 	doc.close()
 
 def editTemp(user):
 	lines = []
-	doc = open(f"./data/all-profiles/{user}.conf", 'w')
+	doc = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "all-profiles", f"{user}.conf"), 'w')
 	lang = str(input("Set a default language: ")).strip()
 	lines.append(f'lang={lang}\n')
 	cs = str(input("Set a default charset: ")).strip()
@@ -30,7 +32,7 @@ def ghtml(user):
 	tab = "	"
 	docName = str(input("Document name: "))
 	title = str(input("Title: "))
-	di = "./html"
+	di = os.path.join(os.path.dirname(os.path.realpath(__file__)), "html")
 	print(f"Your file will be saved in {di}")
 	while(True):
 		asw = str(input("Want to choose a different directory? [y/n] ")).lower()
@@ -42,7 +44,7 @@ def ghtml(user):
 		else:
 			print("Invalid option!")
 	content = ["<!DOCTYPE hmtl>\n"]
-	uConf = open(f"./data/all-profiles/{user}.conf", 'r')
+	uConf = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "all-profiles", f"{user}.conf"), 'r')
 	confLns = uConf.readlines()
 	for i, ln in enumerate(confLns):
 		if ln[:5] == "lang=":
@@ -56,7 +58,7 @@ def ghtml(user):
 	content.append(f'{tab}<meta name="author" content="{user}">\n')
 	content.append(f'{tab}<title>{title}</title>\n')
 	content.append("</head>\n")
-	doc = open(f"{di}/{docName}.html", 'w')
+	doc = open(os.path.join(di, f"{docName}.html"), 'w')
 	doc.writelines(content)
 	doc.close()
 	print()
@@ -70,12 +72,12 @@ def ghtml(user):
 		con = comands(pos, di, docName)
 		if con != False:
 			con = True
-	doc = open(f"{di}/{docName}.html", 'a')
+	doc = open(os.path.join(di, f"{docName}.html"), 'a')
 	doc.write("</html>")
 
 def comands(pos,di,docName):
 	print()
-	doc = open(f"{di}/{docName}.html", 'r')
+	doc = open(os.path.join(di, f"{docName}.html"), 'r')
 	content = doc.readlines()
 	noClose = ("meta", "hr", "br", "area","base","col","embed","img","input","link","param","source","track","wbr")
 	c = str(input("Your comand: ")).strip()
@@ -163,16 +165,17 @@ def comands(pos,di,docName):
 			else:
 				content.insert(pos, f"{(ind+1)*'	'}</{c}>\n")
 				content.insert(pos, f"{(ind+1)*'	'}<{c}>\n")
-	doc = open(f"{di}/{docName}.html", 'w')
+	doc = open(os.path.join(di, f"{docName}.html"), 'w')
 	doc.writelines(content)
 	doc.close()
 	listTags(di,docName, noClose)
 
 
+# "Interface" methods
 def listTags(di,docName,noClose):
 	print()
 	print(f"-> {docName}.html")
-	doc = open(f"{di}/{docName}.html", 'r')
+	doc = open(os.path.join(di, f"{docName}.html"), 'r')
 	content = doc.readlines()
 	endHead = content[content.index("</head>\n")+1:]
 	i = 0
@@ -199,10 +202,9 @@ def listTags(di,docName,noClose):
 					i = round(i, 1)
 				print(f"{ind*'   '}{i}-{tag}")
 
-# "Interface" methods
 def userSelect():
 	print()
-	doc = open("data/profiles.conf", 'r')
+	doc = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "profiles.conf"), 'r')
 	profiles = doc.readlines()
 	doc.close()
 	allProf = []
@@ -245,7 +247,7 @@ def menu(user):
 	print(f"{12*' '}{10*'-'} MENU {10*'-'}")
 	print()
 	try:
-		doc = open(f"./data/all-profiles/{user}.conf", 'r')
+		doc = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "all-profiles", f"{user}.conf"), 'r')
 		print("1. Create HTML")
 		print("2. Edit template")
 		print("3. Exit")
@@ -271,6 +273,20 @@ def menu(user):
 		return False
 
 # Main code
+arc = os.listdir(os.path.dirname(os.path.realpath(__file__)))
+if "data" not in arc:
+	os.mkdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data"))
+if "html" not in arc:
+	os.mkdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), "html"))
+
+arc = os.listdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data"))
+if "profiles.conf" not in arc:
+	doc = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "profiles.conf"), 'w')
+	doc.write("# Your profile names are stored here")
+	doc.close()
+if "all-profiles" not in arc:
+	os.mkdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "all-profiles"))
+
 print(f"{9*'-='} HTML GENERATOR {9*'=-'}")
 while(True):
 	user = userSelect()
