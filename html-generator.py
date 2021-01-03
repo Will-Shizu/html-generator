@@ -62,7 +62,7 @@ def ghtml(user):
 	doc.writelines(content)
 	doc.close()
 	print()
-	print(f"{9*' '}{10*'-'} COMANDS {10*'-'}")
+	print(f"{11*' '}{10*'-'} COMANDS {10*'-'}")
 	print()
 	print("How to use: https://github.com/will-shizu/html-generator")
 	global pos
