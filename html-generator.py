@@ -43,7 +43,7 @@ def ghtml(user):
 			break
 		else:
 			print("Invalid option!")
-	content = ["<!DOCTYPE hmtl>\n"]
+	content = ["<!DOCTYPE html>\n"]
 	uConf = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "all-profiles", f"{user}.conf"), 'r')
 	confLns = uConf.readlines()
 	for i, ln in enumerate(confLns):
@@ -91,7 +91,7 @@ def comands(pos,di,docName):
 				return False
 			elif tg == "unselect" or tg == "uslc":
 				pos = False
-			elif "select" in tg or "slc" in tg:
+			elif "select" in tg or "slc" in tg or "after" in tg or "aft" in tg:
 				slc = float(tg.split(" ")[1])
 				endHead = content[content.index("</head>\n")+1:]
 				for n,l in enumerate(endHead):
@@ -99,7 +99,11 @@ def comands(pos,di,docName):
 						ind = l.count("	")
 						if "/" in l:
 							if l[l.index(">") - 1] == "/":
-								print("This tag cannot have children!")
+								if "after" in tg or "aft" in tg:	
+									ind -= 1
+									pos = n+1
+								else: 
+									print("This tag cannot have children!")
 						else:
 							tag = l[l.index("<")+1:l.index(">")]
 							if ind == 0:
@@ -109,7 +113,20 @@ def comands(pos,di,docName):
 								i += 0.1
 								i = round(i, 1)
 							if i == slc:
-								pos = n+2;
+								if "after" in tg or "aft" in tg:
+									pos = n
+									for a in endHead[n+1:]:
+										if a.count("	") > ind:
+											if a[a.index(">") - 1] == "/":
+												pos+=1
+											elif "/" not in a:
+												pos+=2 
+										else:
+											break
+									pos += 3
+									ind -= 1
+								else:
+									pos = n+2;
 								break
 				pos = pos + content.index("</head>\n")
 			elif tg in noClose:
@@ -132,7 +149,7 @@ def comands(pos,di,docName):
 			return False
 		elif c == "unselect" or c == "uslc":
 				pos = False
-		elif "select" in c or "slc" in c:
+		elif "select" in c or "slc" in c or "after" in c or "aft" in c:
 			slc = float(c.split(" ")[1])
 			endHead = content[content.index("</head>\n")+1:]
 			i = 0
@@ -141,7 +158,11 @@ def comands(pos,di,docName):
 					ind = l.count("	")
 					if "/" in l:
 						if l[l.index(">") - 1] == "/":
-							print("This tag cannot have children!")
+							if "after" in c or "aft" in c:
+								ind -=1
+								pos = n+1
+							else: 
+								print("This tag cannot have children!")
 					else:
 						tag = l[l.index("<")+1:l.index(">")]
 						if ind == 0:
@@ -151,7 +172,20 @@ def comands(pos,di,docName):
 							i += 0.1
 							i = round(i, 1)
 						if i == slc:
-							pos = n+2;
+							if "after" in c or "aft" in c:
+								pos = n
+								for a in endHead[n+1:]:
+									if a.count("	") > ind:
+										if a[a.index(">") - 1] == "/":
+											pos+=1
+										elif "/" not in a:
+											pos+=2 
+									else:
+										break
+								pos += 3
+								ind -=1
+							else:
+								pos = n+2;
 							break
 		elif c in noClose:
 			if not pos:
