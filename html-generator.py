@@ -91,7 +91,7 @@ def comands(pos,di,docName):
 				return False
 			elif tg == "unselect" or tg == "uslc":
 				pos = False
-			elif "select" in tg or "slc" in tg or "after" in tg or "aft" in tg:
+			elif "select" in tg or "slc" in tg or "after" in tg or "aft" in tg or "remove" in tg or "rm" in tg:
 				slc = float(tg.split(" ")[1])
 				endHead = content[content.index("</head>\n")+1:]
 				for n,l in enumerate(endHead):
@@ -125,10 +125,26 @@ def comands(pos,di,docName):
 											break
 									pos += 3
 									ind -= 1
+								elif "remove" in tg or "rm" in tg:
+									pos = n+1
+									pos2= n+1
+									for a in endHead[n+1:]:
+										if a.count("	") > ind:
+											if a[a.index(">") - 1] == "/":
+												pos2+=1
+											elif "/" not in a:
+												pos2+=2 
+										else:
+											break
+									pos2 = pos2 + content.index("</head>\n")
 								else:
 									pos = n+2;
 								break
 				pos = pos + content.index("</head>\n")
+				if "remove" in tg or "rm" in tg:
+					for rm in range(pos, pos2+2):
+						content.pop(pos)
+					pos = False
 			elif tg in noClose:
 				if not pos:
 					content.append(f"<{tg}/>\n")
@@ -149,7 +165,7 @@ def comands(pos,di,docName):
 			return False
 		elif c == "unselect" or c == "uslc":
 				pos = False
-		elif "select" in c or "slc" in c or "after" in c or "aft" in c:
+		elif "select" in c or "slc" in c or "after" in c or "aft" in c or "remove" in c or "rm" in c:
 			slc = float(c.split(" ")[1])
 			endHead = content[content.index("</head>\n")+1:]
 			i = 0
@@ -161,6 +177,9 @@ def comands(pos,di,docName):
 							if "after" in c or "aft" in c:
 								ind -=1
 								pos = n+1
+							elif "remove" in c or "rm" in c:
+								pos = n
+								break
 							else: 
 								print("This tag cannot have children!")
 					else:
@@ -184,9 +203,27 @@ def comands(pos,di,docName):
 										break
 								pos += 3
 								ind -=1
+							elif "remove" in c or "rm" in c:
+								pos = n+1
+								pos2= n+1
+								for a in endHead[n+1:]:
+									if a.count("	") > ind:
+										if a[a.index(">") - 1] == "/":
+											pos2+=1
+										elif "/" not in a:
+											pos2+=2 
+									else:
+										break
+								pos2 = pos2 + content.index("</head>\n")
+								break
 							else:
 								pos = n+2;
 							break
+			pos = pos + content.index("</head>\n")
+			if "remove" in c or "rm" in c:
+				for rm in range(pos, pos2+2):
+					content.pop(pos)
+				pos = False
 		elif c in noClose:
 			if not pos:
 				content.append(f"<{c}/>\n")
