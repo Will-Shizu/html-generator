@@ -193,9 +193,12 @@ if op == 1:
 			else:
 				addHtml(c, arc, slc)
 				print(f"\n-> {docName}")
-				listHtml(arc)
 		if c == "--exit":
+			doc = open(arc, 'a')
+			doc.write("</html>")
+			doc.close()
 			break
+		listHtml(arc)
 
 # rmHtml()
 # slcHtml()
