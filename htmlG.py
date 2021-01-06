@@ -122,6 +122,49 @@ def addHtml(tag, arc, slc=0):
 		doc.writelines(docContent)
 		doc.close()
 
+# Add tags before other tag
+def beforeHtml(arc, slc, tags):
+	self_close = ("area","base","br","col","command","embed","hr","img","input",
+		"keygen","link","menuitem","meta","param","source","track","wbr")
+
+	doc = open(arc, 'r')
+	docContent = doc.readlines()
+	pos = getPos(arc, slc)
+	indent = docContent[pos].count('	')
+	n = 0
+	for tag in tags:
+		pos += n
+		if tag in self_close:
+			docContent.insert(pos,f"{indent*'	'}<{tag}/>\n")
+			n+=1
+		else:
+			docContent.insert(pos, f"{indent*'	'}<{tag}>\n")
+			docContent.insert(pos+1, f"{indent*'	'}</{tag}>\n")
+			n+=2
+	doc = open(arc, 'w')
+	doc.writelines(docContent)
+	doc.close()
+
+# Remove a tag
+def rmHtml(arq, sl):
+	doc = open(arq, 'r')
+	docContent = doc.readlines()
+	pos = getPos(arq, sl)
+	tag = docContent[pos].strip()
+	if "/" in tag:
+		docContent.pop(pos)
+	else:
+		indent = docContent[pos].count('	')
+		close_tag = "</" + tag[tag.index("<")+1:]
+		for i,t in enumerate(docContent):
+			if i > pos and t.strip() == close_tag and t.count('	') == indent:
+				docContent.pop(i)
+				break
+		docContent.pop(pos)
+	doc = open(arc, 'w')
+	doc.writelines(docContent)
+	doc.close()
+
 # Show the tags of a HTML
 def listHtml(arc):
 	doc = open(arc, 'r')
@@ -162,6 +205,7 @@ if "html" not in dirCont:
 # Menu 
 op = menu(["1-Create HTML", "2-Modify HTML", "3-Exit"]) # <= Menu options
 
+# Option 1: Create HTML
 if op == 1:
 	print(30*'-')
 	docName = str(input("Document name: ")).strip()
@@ -184,12 +228,21 @@ if op == 1:
 			c = c.strip()
 			if c ==  "--exit":
 				break
-			if "slc" in c:
+			elif "slc" in c:
 				slc = float(c.split(' ')[1])
 				exist = getPos(arc, slc)
 				if not exist:
 					print("This item not exist!")
 					slc = 0
+			elif "bfr" in c:
+				c = c.split(' ')
+				sl = float(c[1])
+				tags = c[2:]
+				beforeHtml(arc, sl, tags)
+			elif "rm" in c:
+				c = c.split(' ')
+				sl = float(c[1])
+				rmHtml(arc, sl)
 			else:
 				addHtml(c, arc, slc)
 				print(f"\n-> {docName}")
@@ -200,6 +253,5 @@ if op == 1:
 			break
 		listHtml(arc)
 
-# rmHtml()
-# slcHtml()
-# editHtml()
+# editHtml
+# exit
