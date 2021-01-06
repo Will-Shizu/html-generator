@@ -205,6 +205,7 @@ if "html" not in dirCont:
 # Menu 
 op = menu(["1-Create HTML", "2-Modify HTML", "3-Exit"]) # <= Menu options
 
+# Option 1: Create HTML
 if op == 1:
 	print(30*'-')
 	docName = str(input("Document name: ")).strip()
@@ -252,4 +253,5 @@ if op == 1:
 			break
 		listHtml(arc)
 
-# editHtml()
+# editHtml
+# exit
