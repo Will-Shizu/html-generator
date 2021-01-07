@@ -253,6 +253,8 @@ if op == 1:
 			c = c.strip()
 			if c ==  "--exit":
 				break
+			elif c == "uslc":
+				slc = 0
 			elif "slc" in c:
 				slc = float(c.split(' ')[1])
 				exist = getPos(arc, slc)
@@ -263,11 +265,19 @@ if op == 1:
 				c = c.split(' ')
 				sl = float(c[1])
 				tags = c[2:]
-				beforeHtml(arc, sl, tags)
+				exist = getPos(arc, sl)
+				if not exist:
+					print("This item not exist!")
+				else:
+					beforeHtml(arc, sl, tags)
 			elif "rm" in c:
 				c = c.split(' ')
 				sl = float(c[1])
-				rmHtml(arc, sl)
+				exist = getPos(arc, sl)
+				if not exist:
+					print("This item not exist!")
+				else:
+					rmHtml(arc, sl)
 			else:
 				atr = getAtr(c)
 				addHtml(c, arc, slc, atr)
