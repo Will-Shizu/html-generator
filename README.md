@@ -2,23 +2,36 @@
  - [English](#english)
  - [Português](#português)
 
+---
+
 ### English
 # Python HTML generator
  This is a simple Python script for generate HTML documents with simple lines of comands.
 
 ## Requirements
-For run this script you just need to [**download the `htmlG.py`**](https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py) archive and run it with [**Python**](https://www.python.org/) v3.0 or higher.
+For run this script you just need to [**download the `htmlG.py`**](#download) archive and run it with [**Python**](https://www.python.org/) v3.0 or higher.
+
+### Download:
+
+**Linux:**
+For download only the html.G file you can run this comand in the linux terminal:
+`wget https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py`
+
+**Other systems:**
+If you don't have `wget` comand in your terminal you can just download this page in your browser:
+
+[Go to page =>](https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py)
 
 ## Comands
 
 Comand | What it does
 --- | ---
-[Any HTML tag-name (Ex: body, main)](#html-tag) | **Create** a tag
-[slc](#slc) | **Select** a item, the selected item will be the mother of the next tags added
-[uslc](#uslc) | **Unselect**, set the selected item to default (0)
-[bfr](#bfr) | Add tags **before** other tag
-[rm](#rm) | **Remove** a tag
-[--exit](#--exit) | **Exit** the script
+[Any HTML tag-name (Ex: body, main, div...)](#html-tag) | **Create** a tag.
+[slc](#slc) | **Select** a item, the selected item will be the mother of the next tags added.
+[uslc](#uslc) | **Unselect**, set the selected item to default (0).
+[bfr](#bfr) | Add tags **before** other tag.
+[rm](#rm) | **Remove** a tag.
+[--exit](#--exit) | **Exit** the script.
 
 ## Examples
 ### HTML tag
