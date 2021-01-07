@@ -185,7 +185,7 @@ def getAtr(tag):
 	elif '#' in tag:
 		atr = tag.split("#")[1]
 		atr = f" id='{atr}'"
-	elif '.' in c:
+	elif '.' in tag:
 		atr = tag.split('.')[1]
 		atr = f" class='{atr}'"
 	return atr
@@ -220,33 +220,10 @@ def listHtml(arc):
 			if show:
 				print(f"{indent*'   '}{i}-{showLine}")
 
-# MAIN CODE
-# Seting requirements
-fileDir = os.path.dirname(os.path.realpath(__file__))
-dirCont = os.listdir(fileDir)
-if "html" not in dirCont:
-	os.mkdir(os.path.join(fileDir, "html"))
-
-# Menu 
-op = menu(["1-Create HTML", "2-Modify HTML", "3-Exit"]) # <= Menu options
-
-# Option 1: Create HTML
-if op == 1:
-	print(30*'-')
-	docName = str(input("Document name: ")).strip()
-	if docName[-5:] != ".html":
-		docName += ".html"
-	print()
-	print("Leave in blank to save in the default diretory:")
-	print(os.path.join(fileDir, "html"))
-	print()
-	docDir = str(input("Document diretory: ")).strip()
-	if docDir == '':
-		docDir = os.path.join(fileDir, "html")
-	initHtml(docName, docDir)
-	arc = os.path.join(docDir, docName)
-	# Comands
+# All comands are here
+def comands(arc, new=True):
 	slc = 0
+	docName = os.path.basename(arc)
 	while(True):
 		cmd = str(input("\nYour comand: ")).split(',')
 		for c in cmd:
@@ -283,11 +260,55 @@ if op == 1:
 				addHtml(c, arc, slc, atr)
 				print(f"\n-> {docName}")
 		if c == "--exit":
-			doc = open(arc, 'a')
-			doc.write("</html>")
-			doc.close()
+			if new:
+				doc = open(arc, 'a')
+				doc.write("</html>")
+				doc.close()
 			break
 		listHtml(arc)
 
-# editHtml
-# exit
+# MAIN CODE
+# Seting requirements
+fileDir = os.path.dirname(os.path.realpath(__file__))
+dirCont = os.listdir(fileDir)
+if "html" not in dirCont:
+	os.mkdir(os.path.join(fileDir, "html"))
+
+# Menu 
+op = menu(["1-Create HTML", "2-Modify HTML", "3-Exit"]) # <= Menu options
+
+# Option 1: Create HTML
+if op == 1:
+	print(30*'-')
+	docName = str(input("Document name: ")).strip()
+	if docName[-5:] != ".html":
+		docName += ".html"
+	print()
+	print("Leave in blank to save in the default diretory:")
+	print(os.path.join(fileDir, "html"))
+	print()
+	docDir = str(input("Document diretory: ")).strip()
+	if docDir == '':
+		docDir = os.path.join(fileDir, "html")
+	initHtml(docName, docDir)
+	arc = os.path.join(docDir, docName)
+	# Comands
+	comands(arc)
+
+# Edit HTML
+if op == 2:
+	print(30*'-')
+	while(True):
+		docDir = str(input("Document diretory: ")).strip()
+		try:
+			open(docDir, 'r')
+			break
+		except:
+			print("Invalid diretory!")
+	# Comands
+	listHtml(docDir)
+	comands(docDir, False)
+
+# Exit
+if op == 3:
+	print("Bye :)")
