@@ -264,6 +264,7 @@ def comands(arc, new=True):
 				doc = open(arc, 'a')
 				doc.write("</html>")
 				doc.close()
+			print("Bye :)")
 			break
 		listHtml(arc)
 
@@ -287,15 +288,20 @@ if op == 1:
 	print("Leave in blank to save in the default diretory:")
 	print(os.path.join(fileDir, "html"))
 	print()
-	docDir = str(input("Document diretory: ")).strip()
-	if docDir == '':
-		docDir = os.path.join(fileDir, "html")
+	while(True):
+		docDir = str(input("Document diretory: ")).strip()
+		if docDir == '':
+			docDir = os.path.join(fileDir, "html")
+		elif os.path.exists(docDir) and os.path.isdir(docDir):
+			break
+		else:
+			print("Invalid diretory!")
 	initHtml(docName, docDir)
 	arc = os.path.join(docDir, docName)
 	# Comands
 	comands(arc)
 
-# Edit HTML
+# Option 2: Edit HTML
 if op == 2:
 	print(30*'-')
 	while(True):
@@ -309,6 +315,6 @@ if op == 2:
 	listHtml(docDir)
 	comands(docDir, False)
 
-# Exit
+# Option 3: Exit
 if op == 3:
 	print("Bye :)")
