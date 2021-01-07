@@ -90,16 +90,21 @@ def getPos(arc, slc):
 	return False
 
 # Add tags for a HTML document
-def addHtml(tag, arc, slc=0):
+def addHtml(tag, arc, slc=0, atr=''):
 	self_close = ("area","base","br","col","command","embed","hr","img","input",
 		"keygen","link","menuitem","meta","param","source","track","wbr")
+	
+	if "#" in tag:
+		tag = tag.split('#')[0]
+	if "." in tag:
+		tag = tag.split('.')[0]
 
 	if slc == 0:
 		doc = open(arc, 'a')
 		if tag in self_close:
-			doc.write(f"<{tag}/>\n")
+			doc.write(f"<{tag}{atr}/>\n")
 		else:
-			doc.write(f"<{tag}>\n")
+			doc.write(f"<{tag}{atr}>\n")
 			doc.write(f"</{tag}>\n")
 		doc.close()
 	else:
@@ -111,9 +116,9 @@ def addHtml(tag, arc, slc=0):
 		for line in docContent[n:]:
 			if line.count('	') <= docContent[pos].count('	'):
 				if tag in self_close:
-					docContent.insert(n,f"{indent*'	'}<{tag}/>\n")
+					docContent.insert(n,f"{indent*'	'}<{tag}{atr}/>\n")
 				else:
-					docContent.insert(n, f"{indent*'	'}<{tag}>\n")
+					docContent.insert(n, f"{indent*'	'}<{tag}{atr}>\n")
 					docContent.insert(n+1, f"{indent*'	'}</{tag}>\n")
 				break
 			else:
@@ -133,12 +138,17 @@ def beforeHtml(arc, slc, tags):
 	indent = docContent[pos].count('	')
 	n = 0
 	for tag in tags:
+		atr = getAtr(tag)
+		if "#" in tag:
+			tag = tag.split('#')[0]
+		if "." in tag:
+			tag = tag.split('.')[0]
 		pos += n
 		if tag in self_close:
-			docContent.insert(pos,f"{indent*'	'}<{tag}/>\n")
+			docContent.insert(pos,f"{indent*'	'}<{tag}{atr}/>\n")
 			n+=1
 		else:
-			docContent.insert(pos, f"{indent*'	'}<{tag}>\n")
+			docContent.insert(pos, f"{indent*'	'}<{tag}{atr}>\n")
 			docContent.insert(pos+1, f"{indent*'	'}</{tag}>\n")
 			n+=2
 	doc = open(arc, 'w')
@@ -164,6 +174,21 @@ def rmHtml(arq, sl):
 	doc = open(arc, 'w')
 	doc.writelines(docContent)
 	doc.close()
+
+# Get the class and the id of a tag
+def getAtr(tag):
+	atr = ''
+	if '#' in tag and '.' in tag:
+		atr = tag.split("#")[1]
+		atr = atr.split(".")
+		atr = f" id='{atr[0]}' class='{atr[1]}'"
+	elif '#' in tag:
+		atr = tag.split("#")[1]
+		atr = f" id='{atr}'"
+	elif '.' in c:
+		atr = tag.split('.')[1]
+		atr = f" class='{atr}'"
+	return atr
 
 # Show the tags of a HTML
 def listHtml(arc):
@@ -244,7 +269,8 @@ if op == 1:
 				sl = float(c[1])
 				rmHtml(arc, sl)
 			else:
-				addHtml(c, arc, slc)
+				atr = getAtr(c)
+				addHtml(c, arc, slc, atr)
 				print(f"\n-> {docName}")
 		if c == "--exit":
 			doc = open(arc, 'a')
