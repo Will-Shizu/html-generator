@@ -182,6 +182,7 @@ Well, this comand just leave the script, if the document is new it close the `<h
 ```
 bye :)
 ```
+
 ---
 ### Id and Class
 For add id and/or class to a tag just put '#id_name' and/or ".class_name" in the declaration of the tag.
@@ -196,7 +197,7 @@ For add id and/or class to a tag just put '#id_name' and/or ".class_name" in the
 
 You **NEED** to put first the id and then the class if you want both of then.
 
-
+---
 ### Português
 # Gerador de HTMl em Python
  Esse é um script Python simples para gerar documentos HTML com poucas linhas de comando.
@@ -222,7 +223,7 @@ Se você não tem o comando `wget` no seu terminal você pode baixar [essa pági
 Comando | O que ele faz
 --- | ---
 [Qualquer tag HTML (Ex: body)](#tag-html) | **Cria** uma tag.
-[slc](#slc) | **Seleciona** um item, o item selecionado vai se tornar a mãe das próximas tags adicionadas.
+[slc](#slc-*pt*) | **Seleciona** um item, o item selecionado vai se tornar a mãe das próximas tags adicionadas.
 [uslc](#uslc) | **Remove a seleção**, retorna o item selecionado para o padrão (0).
 [bfr](#bfr) | Adiciona tags **antes** de outra tag.
 [rm](#rm) | **Remove** uma tag.
@@ -255,7 +256,7 @@ Adicionar tags é simples, você só precia inserir o nome da tag na linha de co
 ```
 
 ---
-### slc
+### slc (*pt*)
 No ultimo exemplo nós inserimos uma tag `<body>` no documento, agora vamos dar a ela uma tag child.
 **Syntax:** `slc 1, div#main`
 
