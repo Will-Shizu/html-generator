@@ -6,7 +6,7 @@
 
 ### English
 # Python HTML generator
- This is a simple Python script for generate HTML documents with simple lines of comands.
+ This is a simple Python script for generate HTML documents with few comand lines.
 
 ## Requirements
 For run this script you just need to **download the "htmlG.py"** archive and execute it with [**Python**](https://www.python.org/) v3.0 or higher.
@@ -22,7 +22,7 @@ $ wget https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py
 ```
 **Other systems:**
 
-If you don't have `wget` comand in your terminal you can download [this page](https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py) in your browser. 
+If you don't have `wget` comand in your terminal you can download [this page](https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py) from your browser. 
 
 ## Comands
 
