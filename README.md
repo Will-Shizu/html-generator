@@ -218,18 +218,18 @@ Para baixar apenas o arquivo "htmlG.py" execute esse comando no terminal linux:
 Se você não tem o comando `wget` no seu terminal você pode baixar [essa página](https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py) no seu navegador. 
 
 
-## Comands
+## Comandos
 
 Comando | O que ele faz
 --- | ---
 [Qualquer tag HTML (Ex: body)](#tag-html) | **Cria** uma tag.
-[slc](#slc-*pt*) | **Seleciona** um item, o item selecionado vai se tornar a mãe das próximas tags adicionadas.
-[uslc](#uslc) | **Remove a seleção**, retorna o item selecionado para o padrão (0).
-[bfr](#bfr) | Adiciona tags **antes** de outra tag.
-[rm](#rm) | **Remove** uma tag.
-[--exit](#--exit) | **Sai** do script.
+[slc](#slc-pt) | **Seleciona** um item, o item selecionado vai se tornar a mãe das próximas tags adicionadas.
+[uslc](#uslc-pt) | **Remove a seleção**, retorna o item selecionado para o padrão (0).
+[bfr](#bfr-pt) | Adiciona tags **antes** de outra tag.
+[rm](#rm-pt) | **Remove** uma tag.
+[--exit](#--exit-pt) | **Sai** do script.
 
-## Examples
+## Exemplos
 
 ### Tag HTML 
 Adicionar tags é simples, você só precia inserir o nome da tag na linha de comando, vamos ver como se adiciona a tag `<body>`.
@@ -256,7 +256,7 @@ Adicionar tags é simples, você só precia inserir o nome da tag na linha de co
 ```
 
 ---
-### slc (*pt*)
+### slc (pt)
 No ultimo exemplo nós inserimos uma tag `<body>` no documento, agora vamos dar a ela uma tag child.
 **Syntax:** `slc 1, div#main`
 
@@ -283,13 +283,13 @@ No ultimo exemplo nós inserimos uma tag `<body>` no documento, agora vamos dar 
 **Obs.:** Até a seleção mudar, todas as tags adicionadas serão suas filhas.
 
 ---
-### uslc
+### uslc (pt)
 Para retornar a seleção para o padrão você pode selecionar o item 0 ou usar o comando `uslc`.
 
 **Syntax**: `uslc`
 
 ---
-### bfr
+### bfr (pt)
 A posição padrão para adicionar uma tag nesse script é abaixo da ultima tag filha, então nós precisamos de um comando para adicionar tags antes de outra tag, é isso que esse comando faz.
 
 **Syntax:** `bfr 1.1 header main.block`
@@ -323,7 +323,7 @@ A posição padrão para adicionar uma tag nesse script é abaixo da ultima tag 
 **Obs.:** Nesse comando todas as tags precisam ser declarados na mesma linha de comando sem serem separadas por vírgula.
 
 ---
-### rm
+### rm (pt)
 Esse comando remove uma tag pela seu número na lista.
 
 **Syntax:** `rm 1.1`
@@ -352,7 +352,7 @@ Esse comando remove uma tag pela seu número na lista.
 ```
 
 ---
-### --exit
+### --exit (pt)
 Bem, nesse comando apenas sai do script, se o documento é novo ele fecha a tag `<html>` também.
 
 **Syntax:** `exit`
@@ -378,7 +378,7 @@ Bem, nesse comando apenas sai do script, se o documento é novo ele fecha a tag 
 bye :)
 ```
 ---
-### Id e Classes
+### Id e Classes (pt)
 Para adicionar id e/ou classe em uma tag só coloque '#nome_id' e/ou ".nome_classe" na declaração da tag.
 
 **Syntax:** `div#id.class`
