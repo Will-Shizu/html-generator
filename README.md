@@ -63,6 +63,7 @@ Add tags is simple, you just need to put the name of the tag in the comand line,
 ---
 ### slc
 In the last example we put a `<body>` tag in the document, now let's give a child to it.
+
 **Syntax:** `slc 1, div#main`
 
 **Result**
@@ -258,6 +259,7 @@ Adicionar tags é simples, você só precia inserir o nome da tag na linha de co
 ---
 ### slc (pt)
 No ultimo exemplo nós inserimos uma tag `<body>` no documento, agora vamos dar a ela uma tag child.
+
 **Syntax:** `slc 1, div#main`
 
 **Resultado**
