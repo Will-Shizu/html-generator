@@ -15,10 +15,11 @@ For run this script you just need to **download the "htmlG.py"** archive and exe
 
 **Linux:**
 
-For download only the "htmlG.py" file run this comand in the linux terminal:
-
-`wget https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py`
-
+For download only the "htmlG.py" file run this comands in your linux terminal:
+```
+$ sudo apt install wget
+$ wget https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py
+```
 **Other systems:**
 
 If you don't have `wget` comand in your terminal you can download [this page](https://raw.githubusercontent.com/Will-shizu/html-generator/main/htmlG.py) in your browser. 

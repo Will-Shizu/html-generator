@@ -194,7 +194,9 @@ def getAtr(tag):
 def listHtml(arc):
 	doc = open(arc, 'r')
 	docContent = doc.readlines()
+	docName = os.path.basename(arc)
 	endHead = False
+	print(f"\n-> {docName}")
 	i = 0
 	for pos,line in enumerate(docContent):
 		if docContent[pos-1] == "</head>\n":
@@ -258,7 +260,6 @@ def comands(arc, new=True):
 			else:
 				atr = getAtr(c)
 				addHtml(c, arc, slc, atr)
-				print(f"\n-> {docName}")
 		if c == "--exit":
 			if new:
 				doc = open(arc, 'a')
@@ -285,13 +286,14 @@ if op == 1:
 	if docName[-5:] != ".html":
 		docName += ".html"
 	print()
-	print("Leave in blank to save in the default diretory:")
+	print("Leave it blank for save in the default diretory:")
 	print(os.path.join(fileDir, "html"))
 	print()
 	while(True):
 		docDir = str(input("Document diretory: ")).strip()
 		if docDir == '':
 			docDir = os.path.join(fileDir, "html")
+			break
 		elif os.path.exists(docDir) and os.path.isdir(docDir):
 			break
 		else:
